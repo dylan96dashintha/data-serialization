@@ -67,15 +67,15 @@ func main() {
 	// deserialization
 	avro.Deserializer(record)
 
-	// protobuff related serialization and deserialization
-	ads := &protobuf.Address{
+	// protoBuf related serialization and deserialization
+	firstAddress := &protobuf.Address{
 		Street:     "Mampitiya",
 		City:       "Galle",
 		Province:   "Southern",
 		PostalCode: 80000,
 	}
 
-	secondAds := &protobuf.Address{
+	secondAddress := &protobuf.Address{
 		Street:     "ranpokuna",
 		City:       "Pitakotte",
 		Province:   "Colombo",
@@ -84,7 +84,7 @@ func main() {
 	personProtoBuf := protobuf.Person{
 		Name:    "Dilan",
 		Age:     28,
-		Address: []*protobuf.Address{ads, secondAds},
+		Address: []*protobuf.Address{firstAddress, secondAddress},
 	}
 	// Serialize to binary
 	data, err := proto.Marshal(&personProtoBuf)

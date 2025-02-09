@@ -5,6 +5,7 @@ import (
 	"github.com/linkedin/goavro/v2"
 )
 
+// Define the Avro struct and interface for serialization and deserialization
 type avro struct {
 	schema string
 	codec  *goavro.Codec
@@ -19,7 +20,7 @@ func NewAvro(schema string) (Avro, error) {
 
 	codec, err := goavro.NewCodec(schema)
 	if err != nil {
-		fmt.Errorf(fmt.Sprintf("error in initializing codec, err : %s", err))
+		fmt.Errorf(fmt.Sprintf("Error initializing codec, err: %s", err))
 		return nil, err
 	}
 	avroObj := avro{
@@ -28,6 +29,7 @@ func NewAvro(schema string) (Avro, error) {
 	return &avroObj, nil
 }
 
+// Serializer : Converts Go data to Avro format
 func (a avro) Serializer(data interface{}) ([]byte, error) {
 
 	record, err := a.codec.BinaryFromNative(nil, data)
@@ -40,6 +42,7 @@ func (a avro) Serializer(data interface{}) ([]byte, error) {
 	return record, nil
 }
 
+// Deserializer : Converts Avro format back to Go data
 func (a avro) Deserializer(record []byte) {
 	native, _, err := a.codec.NativeFromBinary(record)
 	if err != nil {
